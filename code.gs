@@ -540,11 +540,15 @@ function getStudentProfile(studentId) {
   var sheet = ss.getSheetByName("Students");
   var data = sheet.getDataRange().getValues();
   
+  // Normalize studentId to string and trim
+  var searchId = String(studentId).trim();
+  
   for (var i = 1; i < data.length; i++) {
-    if (data[i][0] == studentId) {
+    var currentId = String(data[i][0]).trim();
+    if (currentId == searchId) {
       return {
         success: true,
-        student: {
+        data: {
           id: data[i][0],
           name: data[i][1],
           class: data[i][2],
@@ -576,7 +580,7 @@ function createStudent(data) {
     return {
       success: false,
       error: 'Student ID already exists',
-      student: existingStudent.student
+      data: existingStudent.data
     };
   }
   
@@ -595,7 +599,7 @@ function createStudent(data) {
   return {
     success: true,
     message: 'Student created successfully',
-    student: {
+    data: {
       id: data.studentId,
       name: data.name,
       class: data.studentClass,

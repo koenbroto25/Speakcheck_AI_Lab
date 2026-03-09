@@ -68,8 +68,10 @@ export function Login({ onLogin }: LoginProps) {
     setError('');
 
     try {
+      console.log('Attempting login for ID:', studentId.trim());
       // Check if student exists
       const response = await getStudentProfile(studentId.trim());
+      console.log('Login response:', response);
       
       if (response.success && response.data) {
         // Existing student
@@ -80,10 +82,11 @@ export function Login({ onLogin }: LoginProps) {
         });
         onLogin(response.data);
       } else {
-        setError('Student ID not found. Please register first.');
+        setError(response.error || 'Student ID not found. Please register first.');
       }
     } catch (err) {
-      setError('Student ID not found. Please register first.');
+      console.error('Login error:', err);
+      setError('Connection error. Please check your internet or API URL.');
     } finally {
       setIsLoading(false);
     }
@@ -104,8 +107,10 @@ export function Login({ onLogin }: LoginProps) {
     setError('');
 
     try {
+      console.log('Attempting registration for ID:', studentId.trim());
       // 1. Check if ID already exists
       const checkResponse = await getStudentProfile(studentId.trim());
+      console.log('Uniqueness check response:', checkResponse);
       
       if (checkResponse.success && checkResponse.data) {
         setError('ID already exists. Please choose a different ID or username.');
@@ -119,6 +124,7 @@ export function Login({ onLogin }: LoginProps) {
         name: name.trim(),
         studentClass
       });
+      console.log('Create student response:', response);
 
       if (response.success && response.data) {
         saveStudentLocal({
@@ -128,10 +134,13 @@ export function Login({ onLogin }: LoginProps) {
         });
         onLogin(response.data);
       } else {
-        throw new Error(response.error || 'Failed to create account');
+        // Even if GAS returns success: false, it might have saved (as seen in user report)
+        // This usually means there was a redirect or JSON parsing error in fetch
+        setError(response.error || 'Registration pending. Try logging in with your ID.');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Registration failed. Please try again.');
+      console.error('Registration error:', err);
+      setError('Registration encountered an issue. Please try logging in with your ID.');
     } finally {
       setIsLoading(false);
     }
