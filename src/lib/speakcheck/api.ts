@@ -164,18 +164,12 @@ export async function saveProgress(data: SaveProgressData): Promise<ApiResponse<
  * Bulk save progress data
  */
 export async function bulkSaveProgress(dataArray: SaveProgressData[]): Promise<ApiResponse<unknown[]>> {
-  const url = API_CONFIG.baseUrl;
-  
-  return fetchWithTimeout<unknown[]>(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      action: 'bulkSave',
-      data: dataArray
-    })
+  // Use GET to avoid CORS preflight issues
+  const url = buildUrl('bulkSave', {
+    data: JSON.stringify(dataArray)
   });
+  
+  return fetchWithTimeout<unknown[]>(url);
 }
 
 // ============================================

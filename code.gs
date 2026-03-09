@@ -246,11 +246,14 @@ function doGet(e) {
       case 'saveProgress':
         result = saveProgress(JSON.parse(params.data));
         break;
+      case 'bulkSave':
+        result = bulkSaveProgress(JSON.parse(params.data));
+        break;
       case 'health':
         result = { status: 'ok', timestamp: new Date().toISOString() };
         break;
       default:
-        result = { error: 'Invalid action. Use: getContent, getStudent, getAllContent, getProgress, getLeaderboard, createStudent, saveProgress' };
+        result = { error: 'Invalid action. Use: getContent, getStudent, getAllContent, getProgress, getLeaderboard, createStudent, saveProgress, bulkSave' };
     }
     
     return ContentService
