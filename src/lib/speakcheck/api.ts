@@ -125,18 +125,14 @@ export async function createStudent(data: {
   name: string;
   studentClass?: string;
 }): Promise<ApiResponse<Student>> {
-  const url = API_CONFIG.baseUrl;
-  
-  return fetchWithTimeout<Student>(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      action: 'createStudent',
-      data
-    })
+  // Use GET to avoid CORS preflight issues with Google Apps Script
+  const url = buildUrl('createStudent', {
+    studentId: data.studentId,
+    name: data.name,
+    studentClass: data.studentClass || ''
   });
+  
+  return fetchWithTimeout<Student>(url);
 }
 
 /**
@@ -155,18 +151,13 @@ export async function getStudentProgress(studentId: string): Promise<ApiResponse
  * Save progress data
  */
 export async function saveProgress(data: SaveProgressData): Promise<ApiResponse<{ logId: string; xpEarned: number }>> {
-  const url = API_CONFIG.baseUrl;
-  
-  return fetchWithTimeout<{ logId: string; xpEarned: number }>(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      action: 'saveProgress',
-      data
-    })
+  // Use GET to avoid CORS preflight issues with Google Apps Script
+  // We need to stringify the data because it's a complex object
+  const url = buildUrl('saveProgress', {
+    data: JSON.stringify(data)
   });
+  
+  return fetchWithTimeout<{ logId: string; xpEarned: number }>(url);
 }
 
 /**

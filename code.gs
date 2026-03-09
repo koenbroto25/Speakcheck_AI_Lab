@@ -236,11 +236,21 @@ function doGet(e) {
       case 'getLeaderboard':
         result = getLeaderboard();
         break;
+      case 'createStudent':
+        result = createStudent({
+          studentId: params.studentId,
+          name: params.name,
+          studentClass: params.studentClass
+        });
+        break;
+      case 'saveProgress':
+        result = saveProgress(JSON.parse(params.data));
+        break;
       case 'health':
         result = { status: 'ok', timestamp: new Date().toISOString() };
         break;
       default:
-        result = { error: 'Invalid action. Use: getContent, getStudent, getAllContent, getProgress, getLeaderboard' };
+        result = { error: 'Invalid action. Use: getContent, getStudent, getAllContent, getProgress, getLeaderboard, createStudent, saveProgress' };
     }
     
     return ContentService
