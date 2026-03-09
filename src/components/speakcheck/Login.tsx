@@ -71,14 +71,14 @@ export function Login({ onLogin }: LoginProps) {
       // Check if student exists
       const response = await getStudentProfile(studentId.trim());
       
-      if (response.success && response.student) {
+      if (response.success && response.data) {
         // Existing student
         saveStudentLocal({
-          id: response.student.id,
-          name: response.student.name,
-          class: response.student.class
+          id: response.data.id,
+          name: response.data.name,
+          class: response.data.class
         });
-        onLogin(response.student);
+        onLogin(response.data);
       } else {
         setError('Student ID not found. Please register first.');
       }
@@ -107,7 +107,7 @@ export function Login({ onLogin }: LoginProps) {
       // 1. Check if ID already exists
       const checkResponse = await getStudentProfile(studentId.trim());
       
-      if (checkResponse.success && checkResponse.student) {
+      if (checkResponse.success && checkResponse.data) {
         setError('ID already exists. Please choose a different ID or username.');
         setIsLoading(false);
         return;
@@ -120,13 +120,13 @@ export function Login({ onLogin }: LoginProps) {
         studentClass
       });
 
-      if (response.success && response.student) {
+      if (response.success && response.data) {
         saveStudentLocal({
-          id: response.student.id,
-          name: response.student.name,
-          class: response.student.class
+          id: response.data.id,
+          name: response.data.name,
+          class: response.data.class
         });
-        onLogin(response.student);
+        onLogin(response.data);
       } else {
         throw new Error(response.error || 'Failed to create account');
       }
