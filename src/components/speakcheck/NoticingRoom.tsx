@@ -19,6 +19,8 @@ import type { GameContent, AliceMood } from '@/types/speakcheck';
 import { GameCard, GameButton, XPBadge } from './GameCard';
 import { AliceAvatar, AliceMessage } from './AliceAvatar';
 
+import type { GameContent, AliceMood, FeedbackResult } from '@/types/speakcheck';
+
 interface NoticingRoomProps {
   level: string;
   onGameComplete: (session: {
@@ -26,6 +28,7 @@ interface NoticingRoomProps {
     xpEarned: number;
     totalQuestions: number;
     correctAnswers: number;
+    feedbackHistory: FeedbackResult[];
   }) => void;
   onExit: () => void;
 }
@@ -211,7 +214,8 @@ export function NoticingRoom({
         score,
         xpEarned,
         totalQuestions: questions.length,
-        correctAnswers
+        correctAnswers,
+        feedbackHistory: [] // Noticing room doesn't use standard feedback history yet
       });
     } else {
       const nextIndex = currentIndex + 1;
