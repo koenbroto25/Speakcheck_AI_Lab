@@ -1,0 +1,22 @@
+{
+  "name": "SpeakCheck: AI Feedback Lab",
+  "short_name": "SpeakCheck",
+  "description": "Aplikasi latihan berbicara bahasa Inggris untuk siswa SMP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F0F0F3",
+  "theme_color": "#4A90E2",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

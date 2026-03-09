@@ -1,0 +1,3 @@
+# SpeakCheck: AI Feedback Lab
+User-agent: *
+Allow: /
