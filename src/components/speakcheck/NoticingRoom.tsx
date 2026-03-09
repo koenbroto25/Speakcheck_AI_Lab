@@ -15,11 +15,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { useTTS } from '@/hooks/speakcheck';
 import { saveProgress, getMockGameContent, getStudentLocal } from '@/lib/speakcheck/api';
-import type { GameContent, AliceMood } from '@/types/speakcheck';
+import type { GameContent, AliceMood, FeedbackResult } from '@/types/speakcheck';
 import { GameCard, GameButton, XPBadge } from './GameCard';
 import { AliceAvatar, AliceMessage } from './AliceAvatar';
-
-import type { GameContent, AliceMood, FeedbackResult } from '@/types/speakcheck';
 
 interface NoticingRoomProps {
   level: string;
